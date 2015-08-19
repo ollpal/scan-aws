@@ -1,0 +1,5 @@
+scan:
+  build: .
+  volumes:
+   - .:/usr/src/app
+   - ~/.aws:/root/.aws
