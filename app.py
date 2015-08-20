@@ -2,9 +2,14 @@
 
 import boto3
 
+def check_vpcs(ec2, vpc):
+    print(vpc.vpc_id)
+
+
 if __name__ == '__main__':
     
     """
+    print("-----------------")
     s3 = boto3.resource('s3')
     for bucket in s3.buckets.all():
         print(bucket.name)
