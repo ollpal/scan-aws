@@ -1,5 +1,7 @@
 FROM python:3.5
 
+RUN apt-get update && apt-get install -y python3-setuptools graphviz
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import boto3
+import pygraphviz as pgv
 
 def check_vpcs(ec2, vpc):
     print(vpc.vpc_id)
@@ -8,6 +9,8 @@ def check_vpcs(ec2, vpc):
 
 if __name__ == '__main__':
     
+    g = pgv.AGraph(directed=True)
+
     """
     print("-----------------")
     s3 = boto3.resource('s3')
@@ -16,7 +19,6 @@ if __name__ == '__main__':
     """
 
     elb = boto3.client('elb')
-
     response = elb.describe_load_balancers()
     elbs = response["LoadBalancerDescriptions"];
     while "NextMarker" in response:
@@ -25,14 +27,20 @@ if __name__ == '__main__':
 
     ec2 = boto3.resource("ec2")
     for vpc in ec2.vpcs.all():
-        print("vpc: {}".format(vpc.id))
+        g.add_node(vpc.id, kind="VPC")
         for subnet in vpc.subnets.all():
-            print("subnet: {} ({})".format(subnet.id, subnet.availability_zone))
+            g.add_node(subnet.id, kind="subnet", az=subnet.availability_zone)
+            g.add_edge(vpc.id, subnet.id)
+
             for instance in subnet.instances.all():
-                print("instance: {}".format(instance.id))
+                g.add_node(instance.id, kind=instance)
+                g.add_edge(subnet.id, instance.id)
+
         for elb in [elb for elb in elbs if elb["VPCId"] == vpc.id]:
-            print("ELB: {}".format(elb["LoadBalancerName"]))
-            print("instances:")
+            g.add_node(elb["LoadBalancerName"], kind="ELB")
             for instance in elb["Instances"]:
-                print(" - {}".format(instance["InstanceId"])) 
+                g.add_edge(elb["LoadBalancerName"], instance["InstanceId"])
                 
+    g.draw("ttt.png", prog="dot")
+
+    
