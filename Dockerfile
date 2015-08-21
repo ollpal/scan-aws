@@ -1,6 +1,7 @@
 FROM python:3.5
 
-#ENV https_proxy http://172.17.42.1:3128/
+ENV http_proxy http://172.17.42.1:3128/
+ENV https_proxy http://172.17.42.1:3128/
 
 RUN apt-get update && apt-get install -y python3-setuptools graphviz
 

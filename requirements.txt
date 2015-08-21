@@ -1,4 +1,2 @@
 boto3
-
-git+git://github.com/pygraphviz/pygraphviz.git#egg=pygraphviz
-
+pygraphviz>=1.3rc
