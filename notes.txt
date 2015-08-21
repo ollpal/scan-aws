@@ -1,0 +1,39 @@
+VPC (Custom VPC, not Default VPC)
+- Subnet
+- Network ACL
+- Customer Gateway
+- VPN Connection
+- DHCP option
+- Internet Gateway
+- VPN Gateway
+- Route Table
+- Network Interface
+
+Elastic Load Balancer
+
+Auto Scaling Group
+- Launch Configuration
+- Notification Configuration
+- Scaling Policy
+
+EC2
+- Instance
+- Instance Grouping
+- Elastic IP
+- Volume (Attached to instance)
+- Security Group
+
+RDS
+
+SNS
+
+SQS
+
+DynamoDB
+
+S3
+
+Cloud Watch
+
+
+
